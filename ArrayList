@@ -1,0 +1,64 @@
+import java.util.Arrays;
+
+public class ArrayList <T> implements List <T> {
+
+    protected T[] a;
+    protected int size;
+
+    public ArrayList() {
+        a = (T[]) new Object[10];
+        size = 0;
+    }
+
+    //adds new element, item, to the end of arraylist
+    public void add(T item) {
+        if (size == a.length)
+            arrayGrow();
+        a[size++] = item;
+    }
+
+    //inserts new element, item, to index pos
+    public void add(int pos, T item){
+        // checks to see if pos is within bounds
+        if (pos < 0 || pos >size){
+           throw new ArrayIndexOutOfBoundsException();
+        }
+        if (size == a.length)
+            arrayGrow();
+        for (int i = size -1; i >=pos; i--){
+            a[i] = a[i-1];
+        }
+        a[pos] = item;
+        size ++;
+    }
+
+    public T get(int pos){
+        if (pos < 0 || pos > size)
+            throw new IndexOutOfBoundsException();
+       return a[pos];
+    }
+
+    public T remove (int pos){
+        if (pos < 0 || pos >size){
+            throw new IndexOutOfBoundsException();
+        }
+
+        T item = a[pos];
+        for (int i = pos; i < size -1; i++){
+            a[i] = a[i+1];
+        }
+        size --;
+        return item;
+    }
+
+
+    public void arrayGrow() {
+        a = Arrays.copyOf(a, a.length + 10);
+    }
+
+    public int size(){
+        return size;
+    }
+
+
+}
